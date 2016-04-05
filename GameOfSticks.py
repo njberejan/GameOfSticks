@@ -5,21 +5,78 @@
 # Repeat steps 3 and 4 until all tasks are implemented.
 # Write a main() function with a game loop that uses your already tested and developed functionality in conjunction with getting user input and printing output.
 
-class Sticks:
-    def __init__(self):
+class Sticks():
+    def __init__(self, number_of_sticks):
         self.number_of_sticks = number_of_sticks
 
-    def ___subtract___(self):
-        return self.number_of_sticks = number_of_sticks - number
+    def __sub__(self, number):
+        return self.number_of_sticks - number
 
-    def game_over(self):
-        if self.number_of_sticks < 1:
+    def game_over(self, sticks_left):
+        if sticks_left < 1:
+            return True
+
+    def player_one_turn(self):
+        while True:
+            number = input("Player one, pick up 1-3 sticks: ")
+            if not number.isnumeric():
+                print("That is not a number!")
+                continue
+            elif int(number) > 3:
+                print("Please pick between 1 and 3!")
+                continue
+            else:
+                return int(number)
+                break
+
+    def player_two_turn(self):
+        while True:
+            number = input("Player two, pick up 1-3 sticks: ")
+            if not number.isnumeric():
+                print("That is not a number!")
+                continue
+            elif int(number) > 3:
+                print("Please pick between 1 and 3!")
+                continue
+            else:
+                return int(number)
+                break
 
 def main():
-    While True:
-        print("Welcome to Game of Sticks!")
-        print("There are {} sticks remaining.".format(Sticks.number_of_sticks))
+    sticks = Sticks(20)
+    turn_count = 0
+    sticks_left = sticks.number_of_sticks
+    print("Welcome to Game of Sticks!")
+    while True:
+        if sticks.game_over(sticks_left):
+            print("The game is over.")
+            break
+        # elif sticks_left == 1:
+        #     print("You have no choice but to take the remaining stick.")
+        elif turn_count % 2 == 0:
+            print("There are {} sticks remaining.".format(sticks_left))
+            player_one_choice = sticks.player_one_turn()
+            sticks_left = sticks_left - player_one_choice
+            print(sticks_left)
+            turn_count += 1
+            continue
+        elif turn_count % 2 == 1:
+            print("There are {} sticks remaining.".format(sticks_left))
+            player_two_choice = sticks.player_two_turn()
+            sticks_left = sticks_left - player_two_choice
+            print(sticks_left)
+            turn_count += 1
+            continue
+        else:
+            print("There are {} sticks remaining.".format(sticks_left))
+            player_one_choice = sticks.player_one_turn()
+            sticks_left = sticks_left - player_one_choice
+            print(sticks_left)
+            turn_count += 1
+            continue
+
     #declares there are 20 sticks
     #prompt user to choose a number of sticks between 1-3
     #returns number of sticks
     #checks for game over condition
+main()
