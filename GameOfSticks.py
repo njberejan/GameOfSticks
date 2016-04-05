@@ -42,38 +42,49 @@ class Sticks():
                 return int(number)
                 break
 
+def human_or_ai():
+    game_mode = input("Press 'h' to play versus a human, or 'c' to play versus the computer: ").lower
+    return game_mode
+
 def main():
     sticks = Sticks(20)
     turn_count = 0
     sticks_left = sticks.number_of_sticks
     print("Welcome to Game of Sticks!")
+    game_mode = human_or_ai()
     while True:
-        if sticks.game_over(sticks_left):
-            print("The game is over.")
-            break
-        # elif sticks_left == 1:
-        #     print("You have no choice but to take the remaining stick.")
-        elif turn_count % 2 == 0:
-            print("There are {} sticks remaining.".format(sticks_left))
-            player_one_choice = sticks.player_one_turn()
-            sticks_left = sticks_left - player_one_choice
-            print(sticks_left)
-            turn_count += 1
+        if game_mode == 'h':
             continue
-        elif turn_count % 2 == 1:
-            print("There are {} sticks remaining.".format(sticks_left))
-            player_two_choice = sticks.player_two_turn()
-            sticks_left = sticks_left - player_two_choice
-            print(sticks_left)
-            turn_count += 1
-            continue
-        else:
-            print("There are {} sticks remaining.".format(sticks_left))
-            player_one_choice = sticks.player_one_turn()
-            sticks_left = sticks_left - player_one_choice
-            print(sticks_left)
-            turn_count += 1
-            continue
+            if sticks.game_over(sticks_left):
+                print("The game is over.")
+                break
+            elif sticks_left == 1:
+                print("You have no choice but to take the remaining stick. You have lost.")
+                break
+            elif turn_count % 2 == 0:
+                print("There are {} sticks remaining.".format(sticks_left))
+                player_one_choice = sticks.player_one_turn()
+                sticks_left = sticks_left - player_one_choice
+                print(sticks_left)
+                turn_count += 1
+                continue
+            elif turn_count % 2 == 1:
+                print("There are {} sticks remaining.".format(sticks_left))
+                player_two_choice = sticks.player_two_turn()
+                sticks_left = sticks_left - player_two_choice
+                print(sticks_left)
+                turn_count += 1
+                continue
+            else:
+                print("There are {} sticks remaining.".format(sticks_left))
+                player_one_choice = sticks.player_one_turn()
+                sticks_left = sticks_left - player_one_choice
+                print(sticks_left)
+                turn_count += 1
+                continue
+
+        elif game_mode == 'c':
+            pass
 
     #declares there are 20 sticks
     #prompt user to choose a number of sticks between 1-3

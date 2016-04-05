@@ -4,11 +4,10 @@
 # Write function(s) for the task and make sure your test(s) pass.
 # Repeat steps 3 and 4 until all tasks are implemented.
 # Write a main() function with a game loop that uses your already tested and developed functionality in conjunction with getting user input and printing output.
-from itertools import cycle
+import inspect
 class Sticks():
-    def __init__(self, number_of_sticks, sticks_left):
+    def __init__(self, number_of_sticks):
         self.number_of_sticks = number_of_sticks
-        self.sticks_left = sticks_left
 
     def __sub__(self, number):
         return self.number_of_sticks - number
@@ -17,9 +16,9 @@ class Sticks():
         if sticks_left < 1:
             return True
 
-    def player_turn(self, player):
+    def player_one_turn(self):
         while True:
-            number = input("{}, pick up 1-3 sticks: ".format(player))
+            number = input("Player one, pick up 1-3 sticks: ")
             if not number.isnumeric():
                 print("That is not a number!")
                 continue
@@ -30,51 +29,73 @@ class Sticks():
                 return int(number)
                 break
 
+    def player_two_turn(self):
+        while True:
+            number = input("Player two, pick up 1-3 sticks: ")
+            if not number.isnumeric():
+                print("That is not a number!")
+                continue
+            elif int(number) > 3:
+                print("Please pick between 1 and 3!")
+                continue
+            else:
+                return int(number)
+                break
 
-    def do_turn(self, player, sticks, sticks_left):
-        print("There are {} sticks remaining.".format(sticks_left))
-        player_choice = sticks.player_turn(player)
-        sticks_left = sticks.sticks_left - player_choice
-        return sticks_left
+class human_v_human():
+    def __init__(self, players):
+        self.human_players = players
 
-
-# for player in cycle(["player1", "player2"]):
-#     do_turn(player)
-#     if game_over():
-#         break
-
-# def do_turn(player, sticks_left):
-#     print("There are {} sticks remaining.".format(sticks_left))
-#     player_choice = sticks.player_turn()
-#     sticks_left = sticks_left - player_choice
-#     print(sticks_left)
-
-
-def main():
-    player = ["player1", "player2"]
-    sticks = Sticks(20, 20)
-    #game begins with 20 sticks and 20 left
-    sticks_left = sticks.number_of_sticks
-    #variable assigned
-    print("Welcome to Game of Sticks!")
-    #prints greeting
-    while True:
-    #loops beings
-        for player in cycle(["player1", "player2"]):
-            #theoretically for switching players
-            sticks.do_turn(player, sticks, sticks.sticks_left)
-            #should execute the turn which returns player choice and subtracts from sticks left
+    def game():
+        while True:
             if sticks.game_over(sticks_left):
                 print("The game is over.")
                 break
-            else:
+            elif sticks_left == 1:
+                print("You have no choice but to take the remaining stick. You have lost.")
+                break
+            elif turn_count % 2 == 0:
+                print("There are {} sticks remaining.".format(sticks_left))
+                player_one_choice = sticks.player_one_turn()
+                sticks_left = sticks_left - player_one_choice
+                print(sticks_left)
+                turn_count += 1
                 continue
+            elif turn_count % 2 == 1:
+                print("There are {} sticks remaining.".format(sticks_left))
+                player_two_choice = sticks.player_two_turn()
+                sticks_left = sticks_left - player_two_choice
+                print(sticks_left)
+                turn_count += 1
+                continue
+            else:
+                print("There are {} sticks remaining.".format(sticks_left))
+                player_one_choice = sticks.player_one_turn()
+                sticks_left = sticks_left - player_one_choice
+                print(sticks_left)
+                turn_count += 1
+                continue
+
+
+def human_or_ai():
+    return input("Press 'h' to play versus a human, or 'c' to play versus the computer: ").lower()
+
+
+def main():
+    from dumpfile import human_v_human
+    sticks = Sticks(20)
+    turn_count = 0
+    sticks_left = sticks.number_of_sticks
+    print("Welcome to Game of Sticks!")
+    game_mode = human_or_ai()
+    print(game_mode)
+    if game_mode == 'h':
+        human_v_human.game()
+    elif game_mode == 'c':
+        pass
 
     #declares there are 20 sticks
     #prompt user to choose a number of sticks between 1-3
     #returns number of sticks
     #checks for game over condition
 main()
-
-#count of turns which increases
-# if modulo 2 returns 0, it's one player's turn, if modulo 2 returns 1, it's the other player's turn.
