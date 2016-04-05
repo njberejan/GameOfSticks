@@ -5,12 +5,14 @@
 # Repeat steps 3 and 4 until all tasks are implemented.
 # Write a main() function with a game loop that uses your already tested and developed functionality in conjunction with getting user input and printing output.
 
+from sticks import Sticks
+from human_v_human import Human_v_Human
+
 def human_or_ai():
     return input("Press 'h' to play versus a human, or 'c' to play versus the computer: ").lower()
 
 
 def main():
-    from dumpfile import human_v_human
     sticks = Sticks(20)
     turn_count = 0
     sticks_left = sticks.number_of_sticks
@@ -18,7 +20,7 @@ def main():
     game_mode = human_or_ai()
     print(game_mode)
     if game_mode == 'h':
-        human_v_human.game()
+        Human_v_Human.game(sticks_left, turn_count, sticks)
     elif game_mode == 'c':
         pass
 
@@ -26,4 +28,5 @@ def main():
     #prompt user to choose a number of sticks between 1-3
     #returns number of sticks
     #checks for game over condition
+
 main()

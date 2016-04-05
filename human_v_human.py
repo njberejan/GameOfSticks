@@ -1,8 +1,9 @@
-class human_v_human():
+from sticks import Sticks
+class Human_v_Human():
     def __init__(self, players):
         self.human_players = players
 
-    def game():
+    def game(sticks_left, turn_count, sticks):
         while True:
             if sticks.game_over(sticks_left):
                 print("The game is over.")
