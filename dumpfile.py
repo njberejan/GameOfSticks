@@ -30,3 +30,4 @@ def main():
     #checks for game over condition
 
 main()
+#make a dictionary of lists with the hats from which the AI will draw from.
