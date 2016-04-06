@@ -5,89 +5,63 @@
 # Repeat steps 3 and 4 until all tasks are implemented.
 # Write a main() function with a game loop that uses your already tested and developed functionality in conjunction with getting user input and printing output.
 
-class Sticks():
-    def __init__(self, number_of_sticks):
-        self.number_of_sticks = number_of_sticks
-
-    def __sub__(self, number):
-        return self.number_of_sticks - number
-
-    def game_over(self, sticks_left):
-        if sticks_left < 1:
-            return True
-
-    def player_one_turn(self):
-        while True:
-            number = input("Player one, pick up 1-3 sticks: ")
-            if not number.isnumeric():
-                print("That is not a number!")
-                continue
-            elif int(number) > 3:
-                print("Please pick between 1 and 3!")
-                continue
-            else:
-                return int(number)
-                break
-
-    def player_two_turn(self):
-        while True:
-            number = input("Player two, pick up 1-3 sticks: ")
-            if not number.isnumeric():
-                print("That is not a number!")
-                continue
-            elif int(number) > 3:
-                print("Please pick between 1 and 3!")
-                continue
-            else:
-                return int(number)
-                break
-
+from sticks import Sticks
+from human_v_human import Human_v_Human
+from human_v_cpu import Human_v_CPU
+cpu_hats = {}
+cpu_dict = {
+0: [1, 2, 3],
+1: [1, 2 ,3],
+2: [1, 2, 3],
+3: [1, 2, 3],
+4: [1, 2, 3],
+5: [1, 2, 3],
+6: [1, 2, 3],
+7: [1, 2, 3],
+8: [1, 2, 3],
+9: [1, 2, 3],
+10: [1, 2, 3],
+11: [1, 2, 3],
+12: [1, 2, 3],
+13: [1, 2, 3],
+14: [1, 2, 3],
+15: [1, 2, 3],
+16: [1, 2, 3],
+17: [1, 2, 3],
+18: [1, 2, 3],
+19: [1, 2, 3],
+20: [1, 2, 3],
+}
 def human_or_ai():
-    game_mode = input("Press 'h' to play versus a human, or 'c' to play versus the computer: ").lower
-    return game_mode
+    return input("Press 'h' to play versus a human, or 'c' to play versus the computer: ").lower()
+
 
 def main():
+
     sticks = Sticks(20)
     turn_count = 0
     sticks_left = sticks.number_of_sticks
     print("Welcome to Game of Sticks!")
     game_mode = human_or_ai()
+    print(game_mode)
+    if game_mode == 'h':
+        Human_v_Human.game(sticks_left, turn_count, sticks)
+    elif game_mode == 'c':
+        Human_v_CPU.game(sticks_left, turn_count, sticks, cpu_dict, cpu_hats)
     while True:
-        if game_mode == 'h':
+        play_again = input("Would you like to play again? Y/n: ")
+        if play_again.lower() == 'y':
+            main()
+        elif play_again.lower() == 'n':
+            break
+        else:
+            print("Please enter 'y' or 'n'.")
             continue
-            if sticks.game_over(sticks_left):
-                print("The game is over.")
-                break
-            elif sticks_left == 1:
-                print("You have no choice but to take the remaining stick. You have lost.")
-                break
-            elif turn_count % 2 == 0:
-                print("There are {} sticks remaining.".format(sticks_left))
-                player_one_choice = sticks.player_one_turn()
-                sticks_left = sticks_left - player_one_choice
-                print(sticks_left)
-                turn_count += 1
-                continue
-            elif turn_count % 2 == 1:
-                print("There are {} sticks remaining.".format(sticks_left))
-                player_two_choice = sticks.player_two_turn()
-                sticks_left = sticks_left - player_two_choice
-                print(sticks_left)
-                turn_count += 1
-                continue
-            else:
-                print("There are {} sticks remaining.".format(sticks_left))
-                player_one_choice = sticks.player_one_turn()
-                sticks_left = sticks_left - player_one_choice
-                print(sticks_left)
-                turn_count += 1
-                continue
 
-        elif game_mode == 'c':
-            pass
 
     #declares there are 20 sticks
     #prompt user to choose a number of sticks between 1-3
     #returns number of sticks
     #checks for game over condition
+
 main()

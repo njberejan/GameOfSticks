@@ -1,4 +1,5 @@
 from sticks import Sticks
+
 class Human_v_Human():
     def __init__(self, players):
         self.human_players = players
@@ -9,7 +10,10 @@ class Human_v_Human():
                 print("The game is over.")
                 break
             elif sticks_left == 1:
-                print("You have no choice but to take the remaining stick. You have lost.")
+                if turn_count % 2 == 0:
+                    print("Player 1 has no choice but to take the remaining stick. Player 1 has lost.")
+                else:
+                    print("Player 2 has no choice but to take the remaining stick. Player 2 has lost.")
                 break
             elif turn_count % 2 == 0:
                 print("There are {} sticks remaining.".format(sticks_left))
